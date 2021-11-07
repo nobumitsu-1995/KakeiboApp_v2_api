@@ -1,0 +1,33 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      category: 収支項目
+      payment_method: 支払方法
+      money_info: 資産情報
+      item: 収支情報
+    attributes:
+      user:
+        name: 名前
+        email: メールアドレス
+        password: パスワード
+      category:
+        name: 小項目名
+        big_category: 大項目名
+      payment_method:
+        name: 支払方法名
+      money_info:
+        total_assets: 総資産
+        target_amount: 目標金額
+        deadline: 目標達成日
+      item:
+        name: 収支内容
+        price: 金額
+        date: 収支発生日
+        note: 備考
+  enums:
+    category:
+      big_category:
+        fixed_cost: 固定費
+        variable_cost: 変動費
+        income: 収入

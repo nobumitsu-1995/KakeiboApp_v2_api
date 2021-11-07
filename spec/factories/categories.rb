@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :category do
-    name { "MyString" }
-    big_category { 1 }
-    user_id { "MyString" }
+    sequence(:name) { |i| "category#{i}" }
+    big_category  { rand(0..2) }
+    sequence(:user_id) { |i| "user_id#{i}" }
   end
 end
