@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :money_info do
-    total_assets { 1 }
-    target_amount { 1 }
-    deadline { "2021-11-07" }
-    user_id { "MyString" }
+    total_assets { rand(1000..9999) }
+    target_amount { rand(10000..999999) }
+    deadline { rand(300..900).days.from_now }
+    sequence(:user_id) { |i| "user_id#{i}" }
   end
 end
