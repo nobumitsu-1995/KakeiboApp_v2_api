@@ -1,21 +1,9 @@
 Rails.application.routes.draw do
-  get 'items/index'
-  get 'items/create'
-  get 'items/show'
-  get 'items/update'
-  get 'items/destroy'
-  get 'money_infos/show'
-  get 'money_infos/create'
-  get 'money_infos/update'
-  get 'payment_methods/index'
-  get 'payment_methods/show'
-  get 'payment_methods/create'
-  get 'payment_methods/update'
-  get 'payment_methods/destroy'
-  get 'categories/index'
-  get 'categories/show'
-  get 'categories/create'
-  get 'categories/update'
-  get 'categories/destroy'
+  resources :user, path: "/", only: [] do
+    resource :money_info
+    get 'items/month/:month' => 'items#index'
+    resources :items, except: [:index]
+    resources :fixed_costs, :categories, :payment_methods
+  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
