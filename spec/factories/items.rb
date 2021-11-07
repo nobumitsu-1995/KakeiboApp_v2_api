@@ -1,11 +1,11 @@
 FactoryBot.define do
   factory :item do
-    name { "MyString" }
-    price { 1 }
-    date { "2021-11-07" }
-    note { "MyString" }
-    user_id { "MyString" }
-    category { "" }
-    payment_method { "" }
+    name { "example" }
+    price { rand(100..100000) }
+    date { rand(10..30).days.from_now }
+    note { "example" }
+    sequence(:user_id) { |i| "user_id#{i}" }
+    association :category
+    association :payment_method
   end
 end
