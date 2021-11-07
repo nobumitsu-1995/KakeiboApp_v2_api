@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'money_infos/show'
+  get 'money_infos/create'
+  get 'money_infos/update'
   get 'payment_methods/index'
   get 'payment_methods/show'
   get 'payment_methods/create'
