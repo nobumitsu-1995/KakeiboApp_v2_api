@@ -3,7 +3,7 @@ class PaymentMethodsController < ApplicationController
 
   def index
     @default_payment_methods = PaymentMethod.where(user_id: nil)
-    @custum_payment_methods = PaymentMethod.where(user: current_user)
+    @custum_payment_methods = PaymentMethod.where(user_id: params[:user_id])
     render json: {default: @default_payment_methods, custum: @custum_payment_methods}, status: 200
   end
 
