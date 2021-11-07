@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'items/index'
+  get 'items/create'
+  get 'items/show'
+  get 'items/update'
+  get 'items/destroy'
   get 'money_infos/show'
   get 'money_infos/create'
   get 'money_infos/update'
