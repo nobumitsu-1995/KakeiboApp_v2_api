@@ -82,6 +82,7 @@ test:
 #
 production:
   <<: *default
-  database: nginx_rails_react_production
-  username: nginx_rails_react
-  password: <%= ENV['NGINX_RAILS_REACT_DATABASE_PASSWORD'] %>
+  database: <%= ENV['DB_DATABASE'] %>
+  host: <%= ENV['DB_HOST'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>

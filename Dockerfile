@@ -1,4 +1,4 @@
-FROM ruby:2.7.2
+FROM amd64/ruby:2.7.2
 
 RUN set -x && \
     apt-get update && \
@@ -11,6 +11,8 @@ RUN set -x && \
 
 RUN mkdir /nginx-rails-react
 WORKDIR /nginx-rails-react
+RUN mkdir -p tmp/pids
+RUN mkdir -p tmp/sockets
 COPY Gemfile /nginx-rails-react/Gemfile
 COPY Gemfile.lock /nginx-rails-react/Gemfile.lock
 RUN bundle install
@@ -21,7 +23,8 @@ RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
-CMD ["rails", "server", "-b", "0.0.0.0"]
+VOLUME /nginx-rails-react/public
+VOLUME /nginx-rails-react/tmp
 
-# puma.sockを配置するディレクトリを作成
-RUN mkdir -p tmp/sockets
+CMD bash -c "rm -f tmp/pids/server.pid && bundle exec puma -C config/puma.rb"
+
