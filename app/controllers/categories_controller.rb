@@ -1,19 +1,18 @@
 class CategoriesController < ApplicationController
-  before_action :set_category, only: [:update, :destroy]
+  before_action :set_category, only: [:update, :destroy, :show]
 
   def index
-    @custum_categories = Category.where(user: current_user)
+    @custum_categories = Category.where(user_id: params[:user_id])
     @default_categories = Category.where(user_id: nil)
     render json: {default: @default_categories, custum: @custum_categories}, status: 200
   end
 
   def show
-    @category = Category.find(params[:id])
     render json: @category, status: 200
   end
 
   def create
-    category = current_user.categories.build(category_params)
+    category = Category.build(category_params)
     if category.save!
         render json: category, status: 201
     else
@@ -40,11 +39,11 @@ class CategoriesController < ApplicationController
   private
 
     def set_category
-        @category = current_user.categories.find(params[:id])
+        @category = Category.find(params[:id])
     end
     
     def category_params
-        params.require(:category).permit(:name, :big_category)
+        params.require(:category).permit(:name, :big_category, :user_id)
     end
 
 end

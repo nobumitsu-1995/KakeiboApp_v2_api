@@ -2,12 +2,12 @@ class FixedCostsController < ApplicationController
     before_action :set_fixed_cost, only: [:update, :show, :destroy]
 
     def index
-        @fixed_costs = FixedCost.includes(:category, :payment_method).where(user_id: session[:user_id]).order(:scheduled_date)
+        @fixed_costs = FixedCost.includes(:category, :payment_method).where((user_id: params[:user_id])).order(:scheduled_date)
         render json: @fixed_costs.as_json(include: [:category, :payment_method]), status: 200
     end
     
     def create
-        fixed_cost = current_user.fixed_costs.new(fixed_cost_params)
+        fixed_cost = FixedCost.new(fixed_cost_params)
         if fixed_cost.save!
             render json: fixed_cost, status: 201
         else
@@ -39,10 +39,10 @@ class FixedCostsController < ApplicationController
     private
     
     def set_fixed_cost
-        @fixed_cost = current_user.fixed_costs.find(params[:id])
+        @fixed_cost = FixedCosts.find(params[:id])
     end
     
     def fixed_cost_params
-        params.require(:fixed_cost).permit(:name, :price, :scheduled_date, :note, :category_id, :payment_method_id)
+        params.require(:fixed_cost).permit(:name, :price, :scheduled_date, :note, :category_id, :payment_method_id, :user_id)
     end
 end

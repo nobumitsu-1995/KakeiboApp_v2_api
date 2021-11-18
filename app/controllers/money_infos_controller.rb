@@ -1,12 +1,12 @@
 class MoneyInfosController < ApplicationController
-  before_action :set_money_info, only: [:show, :update]
+    before_action :set_money_info, only: [:show, :update]
 
     def show
         render json: @money_info, status: 200
     end
     
     def create
-        money_info = current_user.build_money_info(money_info_params)
+        money_info = MoneyInfo.create(money_info_params)
         if money_info.save!
             render json: money_info, status: 201
         else
@@ -25,10 +25,10 @@ class MoneyInfosController < ApplicationController
     private
 
     def set_money_info
-        @money_info = current_user.money_info
+        @money_info = MoneyInfo.find_by((user_id: params[:user_id]))
     end
 
     def money_info_params
-        params.require(:money_info).permit(:total_assets, :target_amount, :deadline)
+        params.require(:money_info).permit(:total_assets, :target_amount, :deadline, :user_id)
     end
 end
