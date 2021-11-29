@@ -2,17 +2,16 @@ class ItemsController < ApplicationController
     before_action :set_item, only: [:update, :show, :destroy]
 
     def index
-        @month = Date.parse(params[:month])
-        @items = Item.includes(:category, :payment_method).where((user_id: params[:user_id]), date: @month.all_month).order(:date)
+        @items = Item.includes(:category, :payment_method).where(user_id: params[:user_id]).order(:date)
         render json: @items.as_json(include: [:category, :payment_method]), status: 200
     end
     
     def create
-        item = Items.new(item_params)
+        item = Item.new(item_params)
         if item.save!
-            render json: item, status: 201
+            render json: item.as_json(include: [:category, :payment_method]), status: 201
         else
-            render json: item.errors.full_messages, status: 401
+            render json: item.errors, status: 401
         end
     end
 
@@ -23,7 +22,7 @@ class ItemsController < ApplicationController
     
     def update
         if @item.update!(item_params)
-            render json: @item, status: 202
+            render json: @item.as_json(include: [:category, :payment_method]), status: 202
         else
             render json: @item.errors, status: 401
         end
@@ -40,7 +39,7 @@ class ItemsController < ApplicationController
     private
     
     def set_item
-        @item = Items.find(params[:id])
+        @item = Item.find(params[:id])
     end
     
     def item_params

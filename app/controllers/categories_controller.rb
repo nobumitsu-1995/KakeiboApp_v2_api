@@ -2,9 +2,8 @@ class CategoriesController < ApplicationController
   before_action :set_category, only: [:update, :destroy, :show]
 
   def index
-    @custum_categories = Category.where(user_id: params[:user_id])
-    @default_categories = Category.where(user_id: nil)
-    render json: {default: @default_categories, custum: @custum_categories}, status: 200
+    @categories = Category.where(user_id: [params[:user_id], nil])
+    render json: @categories, status: 200
   end
 
   def show
@@ -12,7 +11,7 @@ class CategoriesController < ApplicationController
   end
 
   def create
-    category = Category.build(category_params)
+    category = Category.new(category_params)
     if category.save!
         render json: category, status: 201
     else

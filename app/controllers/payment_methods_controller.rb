@@ -2,9 +2,8 @@ class PaymentMethodsController < ApplicationController
   before_action :set_payment_method, only: [:update, :destroy]
 
   def index
-    @default_payment_methods = PaymentMethod.where(user_id: nil)
-    @custum_payment_methods = PaymentMethod.where((user_id: params[:user_id]))
-    render json: {default: @default_payment_methods, custum: @custum_payment_methods}, status: 200
+    @payment_methods = PaymentMethod.where(user_id: [params[:user_id], nil])
+    render json: @payment_methods, status: 200
   end
 
   def show
@@ -12,7 +11,7 @@ class PaymentMethodsController < ApplicationController
   end
 
   def create
-    payment_method = PaymentMethods.build(payment_method_params)
+    payment_method = PaymentMethod.new(payment_method_params)
     if payment_method.save!
         render json: payment_method, status: 201
     else
@@ -39,7 +38,7 @@ class PaymentMethodsController < ApplicationController
   private
 
     def set_payment_method
-        @payment_method = PaymentMethods.find(params[:id])
+        @payment_method = PaymentMethod.find(params[:id])
     end
 
     def payment_method_params
