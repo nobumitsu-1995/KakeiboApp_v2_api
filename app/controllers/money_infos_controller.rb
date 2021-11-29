@@ -2,7 +2,11 @@ class MoneyInfosController < ApplicationController
     before_action :set_money_info, only: [:show, :update]
 
     def show
-        render json: @money_info, status: 200
+        if @money_info
+            render json: @money_info, status: 200
+        else
+            render status: 404
+        end
     end
     
     def create
@@ -25,7 +29,7 @@ class MoneyInfosController < ApplicationController
     private
 
     def set_money_info
-        @money_info = MoneyInfo.find_by((user_id: params[:user_id]))
+        @money_info = MoneyInfo.find_by(user_id: params[:user_id])
     end
 
     def money_info_params
