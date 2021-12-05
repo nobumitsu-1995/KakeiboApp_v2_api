@@ -3,56 +3,47 @@ require 'rails_helper'
 RSpec.describe MoneyInfo, type: :model do
   describe "validationチェック" do
     context "有効な条件" do
-      it ":name, :income, :user_idがあれば有効なこと" do
-        expect(FactoryBot.create(:payment_method)).to be_valid
+      it ":total_assets, :user_id, :monthly_budget, :target_amount, :deadlineがあれば有効なこと" do
+        expect(FactoryBot.create(:money_info)).to be_valid
       end
-
-      it ":user_idが無くても有効なこと" do
-        expect(FactoryBot.create(:payment_method, user_id: nil)).to be_valid
-      end
-
-      it ":incomeがtrueの時有効なこと" do
-        expect(FactoryBot.create(:payment_method, income: true)).to be_valid
-      end
-
-      it ":nameが50字の時有効なこと" do
-        payment_method = FactoryBot.build(:payment_method, name: "a" * 50)
-        payment_method.valid?
-        expect(payment_method.errors[:name]).to be_empty
-      end
-
-      it ":user_idが別であれば、:nameが同じでも有効なこと" do
-        FactoryBot.create(:payment_method, name: "example", user_id: "1234")
-        payment_method = FactoryBot.build(:payment_method, name: "example", user_id: "5678")
-        payment_method.valid?
-        expect(payment_method.errors[:name]).to be_empty
-      end 
     end
 
     context "無効な条件" do
-      it ":nameがない場合無効なこと" do
-        payment_method = FactoryBot.build(:payment_method, name: nil)
-        payment_method.valid?
-        expect(payment_method.errors[:name]).to include("を入力してください") 
+      it ":total_assetsがない場合無効なこと" do
+        money_info = FactoryBot.build(:money_info, total_assets: nil)
+        money_info.valid?
+        expect(money_info.errors[:total_assets]).to include("を入力してください") 
       end
 
-      it ":incomeがない場合無効なこと" do
-        payment_method = FactoryBot.build(:payment_method, income: nil)
-        payment_method.valid?
-        expect(payment_method.errors[:income]).to include("は一覧にありません")
+      it ":monthly_budgetが無い場合無効なこと" do
+        money_info = FactoryBot.build(:money_info, monthly_budget: nil)
+        money_info.valid?
+        expect(money_info.errors[:monthly_budget]).to include("を入力してください") 
+      end
+
+      it ":user_idが無い場合無効なこと" do
+        money_info = FactoryBot.build(:money_info, user_id: nil)
+        money_info.valid?
+        expect(money_info.errors[:user_id]).to include("を入力してください") 
+      end
+
+      it ":target_amountが無い場合無効なこと" do
+        money_info = FactoryBot.build(:money_info, target_amount: nil)
+        money_info.valid?
+        expect(money_info.errors[:target_amount]).to include("を入力してください") 
+      end
+
+      it ":deadlineが無い場合無効なこと" do
+        money_info = FactoryBot.build(:money_info, deadline: nil)
+        money_info.valid?
+        expect(money_info.errors[:deadline]).to include("を入力してください") 
       end
       
-      it ":nameが51字の場合無効なこと" do
-        payment_method = FactoryBot.build(:payment_method, name: "a" * 51)
-        payment_method.valid?
-        expect(payment_method.errors[:name]).to include("は50文字以内で入力してください")
-      end
-
-      it "同一:user_id、同一:nameの時無効なこと" do
-        FactoryBot.create(:payment_method, name: "example", user_id: "1234")
-        payment_method = FactoryBot.build(:payment_method, name: "example", user_id: "1234")
-        payment_method.valid?
-        expect(payment_method.errors[:name]).to include("はすでに存在します")
+      it "同一:user_idのデータがある時作成できないこと" do
+        FactoryBot.create(:money_info, user_id: "1234")
+        money_info = FactoryBot.build(:money_info, user_id: "1234")
+        money_info.valid?
+        expect(money_info.errors[:user_id]).to include("はすでに存在します")
       end
 
     end

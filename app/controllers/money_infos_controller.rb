@@ -33,6 +33,6 @@ class MoneyInfosController < ApplicationController
     end
 
     def money_info_params
-        params.require(:money_info).permit(:total_assets, :target_amount, :deadline, :user_id)
+        params.require(:money_info).permit(:total_assets, :target_amount, :deadline, :monthly_budget, :user_id)
     end
 end
