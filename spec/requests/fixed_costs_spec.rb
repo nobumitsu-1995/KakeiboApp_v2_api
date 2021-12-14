@@ -6,11 +6,11 @@ RSpec.describe "FixedCosts", type: :request do
         payment_method = FactoryBot.create(:payment_method, user_id: "hoge")
 
         post user_fixed_costs_path("hoge"), params: {
-            item: {
+            fixed_cost: {
                 name: "test",
                 user_id: "hoge",
                 price: 1000,
-                scheduled_date: Date.today,
+                scheduled_date: 1,
                 note: "test",
                 category_id: category.id,
                 payment_method_id: payment_method.id
@@ -20,9 +20,9 @@ RSpec.describe "FixedCosts", type: :request do
         expect(response).to have_http_status(201)
         json = JSON.parse(response.body)
         expect(json["name"]).to eq "test"
-        item_id = json["id"]
+        fixed_cost_id = json["id"]
 
-        get user_fixed_cost_path("hoge", item_id)
+        get user_fixed_cost_path("hoge", fixed_cost_id)
 
         expect(response).to have_http_status(200)
         json = JSON.parse(response.body)
@@ -34,11 +34,11 @@ RSpec.describe "FixedCosts", type: :request do
         payment_method = FactoryBot.create(:payment_method, user_id: "hoge")
 
         post user_fixed_costs_path("hoge"), params: {
-            item: {
+            fixed_cost: {
                 name: "test",
                 user_id: "hoge",
                 price: 1000,
-                scheduled_date: Date.today,
+                scheduled_date: 1,
                 note: "test",
                 category_id: category.id,
                 payment_method_id: payment_method.id
@@ -48,9 +48,9 @@ RSpec.describe "FixedCosts", type: :request do
         expect(response).to have_http_status(201)
         json = JSON.parse(response.body)
         expect(json["name"]).to eq "test"
-        item_id = json["id"]
+        fixed_cost_id = json["id"]
 
-        delete user_fixed_cost_path("hoge", item_id)
+        delete user_fixed_cost_path("hoge", fixed_cost_id)
 
         expect(response).to have_http_status(:no_content)
 
@@ -66,11 +66,11 @@ RSpec.describe "FixedCosts", type: :request do
         payment_method = FactoryBot.create(:payment_method, user_id: "hoge")
 
         post user_fixed_costs_path("hoge"), params: {
-            item: {
+            fixed_cost: {
                 name: "test",
                 user_id: "hoge",
                 price: 1000,
-                scheduled_date: Date.today,
+                scheduled_date: 1,
                 note: "test",
                 category_id: category.id,
                 payment_method_id: payment_method.id
@@ -80,10 +80,10 @@ RSpec.describe "FixedCosts", type: :request do
         expect(response).to have_http_status(201)
         json = JSON.parse(response.body)
         expect(json["name"]).to eq "test"
-        item_id = json["id"]
+        fixed_cost_id = json["id"]
 
-        patch user_fixed_cost_path("hoge", item_id), params: {
-            item: {
+        patch user_fixed_cost_path("hoge", fixed_cost_id), params: {
+            fixed_cost: {
                 name: "edit!"
             }
         }
@@ -94,7 +94,7 @@ RSpec.describe "FixedCosts", type: :request do
     end
     
     it "固定収支情報一覧の取得ができる" do
-        FactoryBot.create(:item, user_id: "hoge")
+        FactoryBot.create(:fixed_cost, user_id: "hoge")
 
         get user_fixed_costs_path("hoge")
 
