@@ -31,7 +31,7 @@ class CategoriesController < ApplicationController
     if @category.destroy!
       head :no_content
     else
-        render json: @category.errors, status: 401
+      render json: @category.errors, status: 401
     end
   end
 

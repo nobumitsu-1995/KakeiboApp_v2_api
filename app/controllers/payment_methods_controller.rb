@@ -1,5 +1,5 @@
 class PaymentMethodsController < ApplicationController
-  before_action :set_payment_method, only: [:update, :destroy]
+  before_action :set_payment_method, only: [:update, :destroy, :show]
 
   def index
     @payment_methods = PaymentMethod.where(user_id: [params[:user_id], nil])

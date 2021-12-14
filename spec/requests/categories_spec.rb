@@ -39,6 +39,12 @@ RSpec.describe "Categories", type: :request do
         delete user_category_path("hoge", category_id)
 
         expect(response).to have_http_status(:no_content)
+
+        get user_categories_path("hoge")
+
+        expect(response).to have_http_status(200)
+        json = JSON.parse(response.body)
+        expect(json.length).to eq 0
     end
 
     it "カスタムカテゴリを作成して、内容を編集する。" do
@@ -67,7 +73,14 @@ RSpec.describe "Categories", type: :request do
     end
     
     it "カテゴリ情報一覧の取得ができる" do
-        
+        FactoryBot.create(:category, user_id: "hoge")
+        FactoryBot.create(:category, user_id: nil)
+
+        get user_categories_path("hoge")
+
+        expect(response).to have_http_status(200)
+        json = JSON.parse(response.body)
+        expect(json.length).to eq 2
     end
     
 end
