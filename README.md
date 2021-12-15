@@ -1,24 +1,31 @@
-# README
+# KakeiboApp_v2_frontについて
+このソースコードは家計簿アプリ「SUM APP」のバックエンド部分になります。
+<br>
+また「SUM APP」は貯金目標の達成を補助してくれる家計簿アプリです。アプリケーションのURL、アプリケーション概要につきましては以下をご参照ください。
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+- [アプリケーションURL](https://www.kakeibo-app.com/)
+- [アプリケーション概要](https://www.kakeibo-app.com/tech_info)
 
-Things you may want to cover:
+## インフラ構成について
+インフラ構成につきましては、以下の図の通りAWSを中心に構築しています。
+<br>
+本ソースコードは以下の図のREACT + REDUX部分になります。
 
-* Ruby version
+<img width="800" alt="infra" src="./public/infra.png">
 
-* System dependencies
+## 実装機能について
+実装されている機能に関しては以下のようになっています。
+- ユーザーの作成及びログイン機能
+- 収支情報を登録、編集、削除する機能
+- ユーザーごとにカテゴリ、支払情報等を追加する機能
+- 合計保有資産、貯金目標、貯金達成目標日、月予算を登録して月々の残り予算、必要月貯金額等を算出する機能
+- 日別収支情報、カテゴリ別収支内訳等の分析をする機能
 
-* Configuration
+## データベース設計について
+データベースの設計に関しては以下のER図の通りとなります。
 
-* Database creation
+<img width="800" alt="ER" src="./public/ER.png">
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## 使用している主なgemについて
+- Rspec：　Railsの代表的なテストツールの一つ。単体テスト、統合テストを実行するために使用しました。
+- Factory Bot：　テストのサンプルデータを簡単に作成することができるgem。
