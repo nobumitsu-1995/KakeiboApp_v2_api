@@ -2,9 +2,14 @@
 このソースコードは家計簿アプリ「SUM APP」のバックエンド部分になります。
 <br>
 また「SUM APP」は貯金目標の達成を補助してくれる家計簿アプリです。アプリケーションのURL、アプリケーション概要につきましては以下をご参照ください。
-
+<br><br>
+以下の情報でログイン可能です。<br><br>
+メールアドレス：test.user.for.portfolio@gmail.com<br>
+パスワード：Testuser2021
+<br>
 - [アプリケーションURL](https://www.kakeibo-app.com/)
 - [アプリケーション概要](https://www.kakeibo-app.com/tech_info)
+<img width="1000" alt="infra" src="./public/top_image.png">
 
 ## インフラ構成について
 インフラ構成につきましては、以下の図の通りAWSを中心に構築しています。
